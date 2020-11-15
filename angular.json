@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rwapp"
+    }
+  },
+  "defaultProject": "rwapp",
+  "cli": {
+    "analytics": "f71d3117-a290-4a74-9915-12359acfa48c"
+  }
 }
