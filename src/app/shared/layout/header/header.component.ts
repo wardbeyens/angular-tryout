@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  constructor(private userService: UserService) {}
 
-  constructor() { }
+  currentUser: User;
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.userService.currentUser.subscribe((userData) => {
+      this.currentUser = userData;
+    });
   }
-
 }
