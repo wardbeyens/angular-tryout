@@ -8,7 +8,7 @@ import { concatMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-favorite-button',
+  selector: 'favorite-button',
   templateUrl: './favorite-button.component.html',
   styleUrls: ['./favorite-button.component.scss'],
 })
