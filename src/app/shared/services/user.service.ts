@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 // import { JwtService } from './jwt.service';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,20 +18,28 @@ export class UserService {
   private isAuthenticatedSubject = new ReplaySubject<Boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private ApiService: ApiService, private http: HttpClient) {}
+  constructor(private ApiService: ApiService, private http: HttpClient, private jwtService: JwtService) {}
 
   populate() {
-    this.purgeAuth();
+    if (this.jwtService.getToken()) {
+      this.ApiService.get('/user').subscribe(
+        (data) => this.setAuth(data.user),
+        (err) => this.purgeAuth()
+      );
+    } else {
+      this.purgeAuth();
+    }
   }
 
   setAuth(user: User) {
+    this.jwtService.saveToken(user.token);
     this.currentUserSubject.next(user);
     this.isAuthenticatedSubject.next(true);
   }
 
   purgeAuth() {
     // Remove JWT from localstorage
-    // this.jwtService.destroyToken();
+    this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
     // Set auth status to false
