@@ -1,3 +1,4 @@
+import { ProfileModule } from './profile/profile.module';
 import { SettingsModule } from './settings/settings.module';
 import { HomeModule } from './home/home.module';
 import { LayoutModule } from './shared/layout/layout.module';
@@ -22,6 +23,7 @@ import { AuthGuard } from './shared/services/auth.guard';
     NgbModule,
     AuthModule,
     SettingsModule,
+    ProfileModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
