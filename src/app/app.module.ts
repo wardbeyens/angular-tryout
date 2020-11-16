@@ -11,9 +11,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './shared/services/auth.guard';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EditorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
