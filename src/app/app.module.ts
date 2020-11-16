@@ -1,3 +1,4 @@
+import { ArticleModule } from './article/article.module';
 import { ProfileModule } from './profile/profile.module';
 import { SettingsModule } from './settings/settings.module';
 import { HomeModule } from './home/home.module';
@@ -26,6 +27,7 @@ import { EditorModule } from './editor/editor.module';
     SettingsModule,
     ProfileModule,
     EditorModule,
+    ArticleModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
