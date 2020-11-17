@@ -1,3 +1,5 @@
+import { HttpParams } from '@angular/common/http';
+import { ArticleListConfig } from './../models/article-list-config.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
@@ -22,16 +24,28 @@ export class ArticlesService {
     }
   }
 
-  destroy(slug){
-    return this.ApiService.delete('/articles/' + slug)
+  destroy(slug) {
+    return this.ApiService.delete('/articles/' + slug);
   }
 
   favorite(slug): Observable<Article> {
-    return this.ApiService.post('/articles/' + slug + '/favorite')
+    return this.ApiService.post('/articles/' + slug + '/favorite');
   }
 
   unfavorite(slug): Observable<Article> {
-    return this.ApiService.delete('/articles/' + slug + '/favorite')
+    return this.ApiService.delete('/articles/' + slug + '/favorite');
   }
 
+  query(config: ArticleListConfig): Observable<{ articles: Article[]; articlesCount: number }> {
+    const params = {};
+
+    Object.keys(config.filters).forEach((key) => {
+      params[key] = config.filters[key];
+    });
+
+    return this.ApiService.get(
+      '/articles' + (config.type === 'feed' ? '/feed' : ''),
+      new HttpParams({ fromObject: params })
+    );
+  }
 }

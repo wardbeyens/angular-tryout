@@ -9,9 +9,18 @@ import { ComponentsModule } from './components/components.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ArticleMetaComponent } from './article-helper/article-meta/article-meta.component';
 import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-button.component';
+import { ArticlePreviewComponent } from './article-helper/article-preview/article-preview.component';
+import { ArticleListComponent } from './article-helper/article-list/article-list.component';
 
 @NgModule({
-  declarations: [ShowAuthedDirective, FollowButtonComponent, ArticleMetaComponent, FavoriteButtonComponent],
+  declarations: [
+    ShowAuthedDirective,
+    FollowButtonComponent,
+    ArticleMetaComponent,
+    FavoriteButtonComponent,
+    ArticlePreviewComponent,
+    ArticleListComponent,
+  ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, ComponentsModule],
   exports: [
     CommonModule,
@@ -24,6 +33,8 @@ import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-butt
     FollowButtonComponent,
     ArticleMetaComponent,
     FavoriteButtonComponent,
+    ArticlePreviewComponent,
+    ArticleListComponent,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
 })
