@@ -19,7 +19,10 @@ export class FavoriteButtonComponent implements OnInit {
 
   constructor(private articlesService: ArticlesService, private router: Router, private userService: UserService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('FavoriteButtonComponent');
+    console.log(this.article);
+  }
 
   toggleFavorite() {
     this.isSubmitting = true;
@@ -30,6 +33,7 @@ export class FavoriteButtonComponent implements OnInit {
           // Not authenticated? Push to login screen
           if (!authenticated) {
             this.router.navigateByUrl('/login');
+            //dit moet niet
             return of(null);
           }
 
@@ -60,5 +64,7 @@ export class FavoriteButtonComponent implements OnInit {
         })
       )
       .subscribe();
+
+      
   }
 }

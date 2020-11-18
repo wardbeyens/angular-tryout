@@ -9,14 +9,13 @@ import { Article } from '../../models/article.model';
   styleUrls: ['./article-list.component.scss'],
 })
 export class ArticleListComponent implements OnInit {
-  query: ArticleListConfig;
-  results: Article[];
-  loading: boolean = false;
-  currentPage: number = 1;
-  totalPages: Array<number> = [1];
+  constructor(private articlesService: ArticlesService) {}
+
+  ngOnInit(): void {}
 
   @Input() limit: number;
-  @Input() set config(config: ArticleListConfig) {
+  @Input()
+  set config(config: ArticleListConfig) {
     if (config) {
       this.query = config;
       this.currentPage = 1;
@@ -24,23 +23,33 @@ export class ArticleListComponent implements OnInit {
     }
   }
 
-  constructor(private articlesService: ArticlesService) {}
+  query: ArticleListConfig;
+  loadedArticles: Article[];
+  loading = false;
+  currentPage: number = 1;
+  totalPages: Array<number> = [1];
 
-  ngOnInit(): void {}
+  setPageTo(pageNumber) {
+    this.currentPage = pageNumber;
+    this.runQuery();
+  }
 
   runQuery() {
     this.loading = true;
-    this.results = [];
+    this.loadedArticles = [];
 
+    // Create limit and offset filter (if necessary)
     if (this.limit) {
       this.query.filters.limit = this.limit;
       this.query.filters.offset = this.limit * (this.currentPage - 1);
     }
 
     this.articlesService.query(this.query).subscribe((data) => {
+      console.log(data);
       this.loading = false;
-      this.results = data.articles;
+      this.loadedArticles = data.articles;
 
+      // Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
       this.totalPages = Array.from(new Array(Math.ceil(data.articlesCount / this.limit)), (val, index) => index + 1);
     });
   }

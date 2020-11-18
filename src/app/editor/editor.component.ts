@@ -38,11 +38,13 @@ export class EditorComponent implements OnInit {
       console.log(data);
       this.publishText = data[data.length - 1].path !== 'editor' ? 'Edit Article' : 'Publish Article';
     });
+
   }
 
   ngOnInit(): void {
     // If there's an article prefetched, load it
     this.route.data.subscribe((data: { article: Article }) => {
+      // hier gaat ie checken
       if (data.article) {
         this.article = data.article;
         this.articleForm.patchValue(data.article);

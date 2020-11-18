@@ -7,10 +7,12 @@ import { Article } from '../../models/article.model';
   styleUrls: ['./article-meta.component.scss'],
 })
 export class ArticleMetaComponent implements OnInit {
-
   @Input() article: Article;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log('ArticleMetaComponent');
+    // console.log(this.article);
+  }
 }

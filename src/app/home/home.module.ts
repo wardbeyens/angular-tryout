@@ -1,3 +1,4 @@
+import { HomeAuthResolverService } from './home-auth-resolver.service';
 import { SharedModule } from './../shared/shared.module';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
@@ -8,6 +9,9 @@ const homeRouting: ModuleWithProviders<RouterModule> = RouterModule.forChild([
   {
     path: '',
     component: HomeComponent,
+    resolve: {
+      isAuthenticated: HomeAuthResolverService
+    }
   },
 ]);
 

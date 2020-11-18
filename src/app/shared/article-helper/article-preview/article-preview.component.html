@@ -1,6 +1,6 @@
 <div class="article-preview">
   <article-meta [article]="article">
-    <favorite-button (onToggle)="onToggleFavorite($event)" class="pull-xs-right">
+    <favorite-button (onToggle)="onToggleFavorite($event)" [article]="article" class="pull-xs-right">
       {{ article.favoritesCount }}
     </favorite-button>
   </article-meta>

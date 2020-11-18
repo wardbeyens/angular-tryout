@@ -16,6 +16,7 @@ export class ProfileArticlesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.parent.data.subscribe((data: { profile: Profile }) => {
+      console.log(data);
       this.profile = data.profile;
       this.articlesConfig.filters.author = this.profile.username;
     });
