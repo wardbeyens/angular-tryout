@@ -28,13 +28,17 @@ export class ArticlesService {
     return this.ApiService.delete('/articles/' + slug);
   }
 
-  favorite(slug): Observable<Article> {
-    return this.ApiService.post('/articles/' + slug + '/favorite');
+  favorite(slug, favorite: boolean): Observable<Article> {
+    if (favorite) {
+      return this.ApiService.post('/articles/' + slug + '/favorite').pipe(map((d) => d.article));
+    } else {
+      return this.ApiService.delete('/articles/' + slug + '/favorite').pipe(map((d) => d.article));
+    }
   }
 
-  unfavorite(slug): Observable<Article> {
-    return this.ApiService.delete('/articles/' + slug + '/favorite');
-  }
+  // unfavorite(slug): Observable<Article> {
+  //   return this.ApiService.delete('/articles/' + slug + '/favorite');
+  // }
 
   query(config: ArticleListConfig): Observable<{ articles: Article[]; articlesCount: number }> {
     const params = {};

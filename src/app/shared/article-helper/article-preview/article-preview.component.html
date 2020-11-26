@@ -1,9 +1,23 @@
 <div class="article-preview">
-  <article-meta [article]="article">
-    <favorite-button (onToggle)="onToggleFavorite($event)" [article]="article" class="pull-xs-right">
-      {{ article.favoritesCount }}
+ <article-meta [article]="article">
+    <favorite-button
+      (onToggle)="onToggleFavorite()"
+      [countLikes]="article.favoritesCount"
+      [isLiked]="article.favorited"
+      [isSubmitting]="isSubmitting"
+      class="pull-xs-right"
+    >
     </favorite-button>
   </article-meta>
+
+<!--   <favorite-button
+    (onToggle)="onToggleFavorite()"
+    [countLikes]="article.favoritesCount"
+    [isLiked]="article.favorited"
+    [isSubmitting]="isSubmitting"
+    class="pull-xs-right"
+  >
+  </favorite-button> -->
 
   <a [routerLink]="['/article', article.slug]" class="preview-link">
     <h1>{{ article.title }}</h1>

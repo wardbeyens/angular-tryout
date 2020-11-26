@@ -1,3 +1,5 @@
+import { tap } from 'rxjs/operators';
+import { Comment } from './../shared/models/comment.model';
 import { CommentsService } from './../shared/services/comments.service';
 import { UserService } from './../shared/services/user.service';
 import { ArticlesService } from './../shared/services/articles.service';
@@ -6,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from '../shared/models/article.model';
 import { User } from '../shared/models/user.model';
 import { FormControl } from '@angular/forms';
-import { error } from 'protractor';
 
 @Component({
   selector: 'app-article',
@@ -17,30 +18,33 @@ export class ArticleComponent implements OnInit {
   article: Article;
   currentUser: User;
   canModify: boolean;
-  isSubmitting = false;
-  isDeleting = false;
-
   comments: Comment[];
   commentControl = new FormControl();
   commentFormErrors = {};
+  isSubmitting = false;
+  isDeleting = false;
 
   constructor(
     private route: ActivatedRoute,
     private articlesService: ArticlesService,
+    private commentsService: CommentsService,
     private router: Router,
-    private userService: UserService,
-    private commentService: CommentsService
+    private userService: UserService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    // Retreive the prefetched article
     this.route.data.subscribe((data: { article: Article }) => {
       this.article = data.article;
 
+      // Load the comments on this article
       this.populateComments();
     });
 
+    // Load the current user's data
     this.userService.currentUser.subscribe((userData: User) => {
       this.currentUser = userData;
+
       this.canModify = this.currentUser.username === this.article.author.username;
     });
   }
@@ -62,21 +66,24 @@ export class ArticleComponent implements OnInit {
   deleteArticle() {
     this.isDeleting = true;
 
-    this.articlesService.destroy(this.article.slug).subscribe((succes) => {
+    this.articlesService.destroy(this.article.slug).subscribe((success) => {
       this.router.navigateByUrl('/');
     });
   }
 
   populateComments() {
-    this.commentService.getAll(this.article.slug).subscribe((comments) => (this.comments = comments));
+    this.commentsService.getAll(this.article.slug).subscribe((comments) => {
+      this.comments = comments;
+    });
   }
 
   addComment() {
     this.isSubmitting = true;
     this.commentFormErrors = {};
 
-    let commentBody = this.commentControl.value;
-    this.commentService.add(this.article.slug, commentBody).subscribe(
+    const commentBody = this.commentControl.value;
+    console.log(this.comments);
+    this.commentsService.add(this.article.slug, commentBody).subscribe(
       (comment) => {
         this.comments.unshift(comment);
         this.commentControl.reset('');
@@ -90,7 +97,7 @@ export class ArticleComponent implements OnInit {
   }
 
   onDeleteComment(comment) {
-    this.commentService.destroy(comment.id, this.article.slug).subscribe((succes) => {
+    this.commentsService.destroy(comment.id, this.article.slug).subscribe((success) => {
       this.comments = this.comments.filter((item) => item !== comment);
     });
   }

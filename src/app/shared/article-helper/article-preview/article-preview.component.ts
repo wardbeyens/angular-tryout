@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../models/article.model';
+import { ArticlesService } from '../../services/articles.service';
 
 @Component({
   selector: 'article-preview',
@@ -8,21 +9,17 @@ import { Article } from '../../models/article.model';
 })
 export class ArticlePreviewComponent implements OnInit {
   @Input() article: Article;
+  isSubmitting = false;
 
-  constructor() {}
+  constructor(private articlesService: ArticlesService) {}
 
-  ngOnInit(): void {
-    /*     console.log('ArticlePreviewComponent');
-    console.log(this.article); */
-  }
+  ngOnInit(): void {}
 
-  onToggleFavorite(favorited: boolean) {
-    this.article['favorited'] = favorited;
-
-    if (favorited) {
-      this.article['favoritesCount']++;
-    } else {
-      this.article['favoritesCount']--;
-    }
+  onToggleFavorite() {
+    this.isSubmitting = true;
+    this.articlesService.favorite(this.article.slug, !this.article.favorited).subscribe((article) => {
+      this.article = article;
+      this.isSubmitting = false;
+    });
   }
 }

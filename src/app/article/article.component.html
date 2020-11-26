@@ -15,10 +15,10 @@
 
         <span [hidden]="canModify">
           <follow-button [profile]="article.author" (onToggle)="onToggleFollowing($event)"> </follow-button>
-          <favorite-button [article]="article" (onToggle)="onToggleFavorite($event)">
+          <!--           <favorite-button [article]="article" (onToggle)="onToggleFavorite($event)">
             {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article
             <span class="counter">({{ article.favoritesCount }})</span>
-          </favorite-button>
+          </favorite-button> -->
         </span>
       </article-meta>
     </div>
@@ -50,10 +50,10 @@
         <span [hidden]="canModify">
           <follow-button [profile]="article.author" (onToggle)="onToggleFollowing($event)"> </follow-button>
 
-          <favorite-button [article]="article" (onToggle)="onToggleFavorite($event)">
+          <!--           <favorite-button [article]="article" (onToggle)="onToggleFavorite($event)">
             {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article
             <span class="counter">({{ article.favoritesCount }})</span>
-          </favorite-button>
+          </favorite-button> -->
         </span>
       </article-meta>
     </div>

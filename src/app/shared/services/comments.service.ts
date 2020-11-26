@@ -1,3 +1,4 @@
+import { Comment } from './../models/comment.model';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
@@ -11,15 +12,15 @@ export class CommentsService {
 
   add(slug, payload): Observable<Comment> {
     return this.apiService
-      .post('/articles/' + slug + '/comments', { comment: { body: payload } })
-      .pipe(map((d) => d.comment));
+      .post(`/articles/${slug}/comments`, { comment: { body: payload } })
+      .pipe(map((data) => data.comment));
   }
 
   getAll(slug): Observable<Comment[]> {
-    return this.apiService.get('/articles/' + slug + '/comments').pipe(map((d) => d.comment));
+    return this.apiService.get(`/articles/${slug}/comments`).pipe(map((data) => data.comments));
   }
 
-  destroy(commentId, slug) {
-    return this.apiService.delete('/articles/' + slug + '/comments/' + commentId);
+  destroy(commentId, articleSlug) {
+    return this.apiService.delete(`/articles/${articleSlug}/comments/${commentId}`);
   }
 }
